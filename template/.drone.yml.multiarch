@@ -1,0 +1,60 @@
+# if you want to publish a multi-architecture image, replace the
+# contents of the .drone.yml file with the contents of this file
+
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: build
+  image: golang
+  commands:
+  - go build
+  - go test ./...
+
+- name: publish
+  image: plugins/docker
+  settings:
+    repo: {{DockerRepository}}
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+    dockerfile: docker/Dockerfile
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+- name: publish_arm
+  image: plugins/docker
+  settings:
+    repo: {{DockerRepository}}
+    auto_tag: true
+    auto_tag_suffix: linux-arm
+    dockerfile: docker/Dockerfile.linux.arm
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+- name: publish_arm
+  image: plugins/docker
+  settings:
+    repo: {{DockerRepository}}
+    auto_tag: true
+    auto_tag_suffix: linux-arm64
+    dockerfile: docker/Dockerfile.linux.arm64
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+- name: manifest
+  image: plugins/manifest
+  settings:
+    spec: docker/manifest.tmpl
+    auto_tag: true
+    ignore_missing: true
+    password:
+      from_secret: docker_password
+    username:
+      from_secret: docker_username
