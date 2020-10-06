@@ -3,7 +3,7 @@
 This is a [boilr template](https://github.com/tmrts/boilr) for creating a pipeline plugin. Use a pipeline plugin to create and share re-usable pipeline steps. Get started by installing the template:
 
 ```console
-$ boilr download drone/boilr-plugin drone-plugin
+$ boilr template download drone/boilr-plugin drone-plugin
 ```
 
 create a project in directory my-plugin:
