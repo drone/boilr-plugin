@@ -33,6 +33,11 @@ type Pipeline struct {
 		Modifier   string `envconfig:"DRONE_CALVER_MODIFIER"`
 	}
 
+	// Card provides adaptive card configuration options.
+	Card struct {
+		Path string `envconfig:"DRONE_CARD_PATH"`
+	}
+
 	// Commit provides the commit metadata.
 	Commit struct {
 		Rev     string `envconfig:"DRONE_COMMIT_SHA"`
