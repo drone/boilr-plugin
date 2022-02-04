@@ -12,8 +12,11 @@ import (
 	"os"
 )
 
-func writeCard(path string, card interface{}) {
-	data, _ := json.Marshal(card)
+func writeCard(path, schema string, card interface{}) {
+	data, _ := json.Marshal(map[string]interface{}{
+		"schema": schema,
+		"data":   card,
+	})
 	switch {
 	case path == "/dev/stdout":
 		writeCardTo(os.Stdout, data)
